@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+
+use Symfony\Component\ClassLoader\UniversalClassLoader;
+use Rasp\App;
+
+try {
+    // ComposerAutoLoaderの読み込み
+    require_once dirname(__FILE__).'/library/composer/vendor/autoload.php';
+
+    // オートローダーの設定
+    $loader = new UniversalClassLoader();
+    $loader->registerNamespace('Rasp', __DIR__.'/commands');
+    $loader->register();
+
+
+    // 定数の設定
+    defined('ROOT') || define('ROOT', realpath(dirname(__FILE__)));
+    defined('CMDS') || define('CMDS', ROOT.'/commands/Rasp/Commands');
+    defined('DATA') || define('DATA', ROOT.'/data');
+
+
+
+    // コマンドインスタンスの取得
+    $app = App::getInstance();
+
+    // 引数の有無を確認する
+    if (count($argv) > 1) {
+        $app->execute($argv);
+
+    } else {
+        $app->getCommandsList();
+    }
+
+} catch (\Exception $e) {
+    echo PHP_EOL.'  ' .  pack('c',0x1B) . "[1;31m" .
+        $e->getMessage() . pack('c',0x1B) . "[0m" .PHP_EOL.PHP_EOL;
+}
