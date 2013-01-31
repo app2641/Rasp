@@ -79,7 +79,7 @@ class App
      **/
     public function getCommandsList ()
     {
-        echo "\n" . pack('c',0x1B) . "[1m" . '-- raspberry commands list --' . pack('c',0x1B) . "[0m" . "\n";
+        echo "\n" . pack('c',0x1B) . "[1m" . '-- rasp commands list --' . pack('c',0x1B) . "[0m" . "\n";
 
         // コマンドパス内を精査する
         if ($dh = opendir(CMDS)) {
